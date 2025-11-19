@@ -68,6 +68,7 @@ export default function QuickProfilePage() {
       const response = await fetch('/api/profiles', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // ВАЖНО: отправляем cookies для аутентификации
         body: JSON.stringify(profileData),
       })
 

@@ -1,4 +1,4 @@
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { generateEmbedding } from '@/lib/ai/embeddings'
 import { NextResponse } from 'next/server'
 import type { Database } from '@/types/supabase'
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   const offset = parseInt(searchParams.get('offset') || '0')
 
   try {
-    const supabase = await createServerClient()
+    const supabase = await createClient()
     
     let query = supabase
       .from('profiles')
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    const supabase = await createServerClient()
+    const supabase = await createClient()
     
     // Проверяем авторизацию
     const {
