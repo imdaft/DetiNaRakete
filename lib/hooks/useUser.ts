@@ -39,6 +39,20 @@ export function useUser() {
 
           if (error) {
             console.error('Error fetching user profile:', error)
+            // Если запись не найдена, создаем базовый профиль
+            if (error.code === 'PGRST116') {
+              console.log('User record not found, using auth data only')
+              setProfile({
+                id: authUser.id,
+                email: authUser.email || '',
+                full_name: authUser.user_metadata?.full_name || null,
+                avatar_url: authUser.user_metadata?.avatar_url || null,
+                phone: authUser.user_metadata?.phone || null,
+                role: 'client',
+                created_at: authUser.created_at,
+                updated_at: new Date().toISOString(),
+              } as AppUser)
+            }
           } else if (userData) {
             setProfile(userData as AppUser)
           }
