@@ -3,11 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { useUser } from '@/lib/hooks/useUser'
 
 export default function QuickProfilePage() {
   const router = useRouter()
-  const { user } = useUser()
   const [status, setStatus] = useState('')
   const [error, setError] = useState('')
 
@@ -18,7 +16,6 @@ export default function QuickProfilePage() {
   const [city, setCity] = useState('Москва')
 
   console.log('[QuickProfile] Component rendered')
-  console.log('[QuickProfile] User:', user?.id, user?.email)
   console.log('[QuickProfile] Display name:', displayName)
   console.log('[QuickProfile] Slug:', slug)
 
@@ -29,7 +26,6 @@ export default function QuickProfilePage() {
     
     e.preventDefault()
     
-    console.log('[handleCreate] User from hook:', user)
     console.log('[handleCreate] Display name:', displayName)
     console.log('[handleCreate] Slug:', slug)
     
@@ -187,7 +183,7 @@ export default function QuickProfilePage() {
             fontWeight: 'bold',
           }}
         >
-          Создать профиль {!user && '(без user - для теста)'}
+          Создать профиль (прямая проверка auth)
         </button>
       </form>
 
