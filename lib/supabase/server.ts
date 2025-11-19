@@ -9,19 +9,14 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
+        getAll() {
+          return cookieStore.getAll()
         },
-        set(name: string, value: string, options: CookieOptions) {
+        setAll(cookiesToSet) {
           try {
-            cookieStore.set({ name, value, ...options })
-          } catch {
-            // Server component
-          }
-        },
-        remove(name: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value: '', ...options })
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            )
           } catch {
             // Server component
           }
@@ -31,13 +26,20 @@ export async function createClient() {
   )
 }
 
-// Экспортируем для API routes (синхронная версия без cookies)
+// Экспортируем для API routes (с пустыми cookies методами)
 export function createServerClient() {
   return createSupabaseServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      cookies: {},
+      cookies: {
+        getAll() {
+          return []
+        },
+        setAll() {
+          // No-op for API routes
+        },
+      },
     }
   )
 }
