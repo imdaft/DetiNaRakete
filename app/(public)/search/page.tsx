@@ -46,6 +46,7 @@ function SearchContent() {
               isLoading={results.isLoading}
               error={results.error}
               method={results.method}
+              onRelatedSearchClick={setQuery}
             />
           </main>
         </div>

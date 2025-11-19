@@ -5,6 +5,7 @@ import { ServiceCard } from '@/components/features/service/service-card'
 import { ServiceCardSkeleton } from '@/components/shared/skeletons'
 import { EmptyState } from '@/components/shared/empty-state'
 import { Badge } from '@/components/ui/badge'
+import { RelatedSearches } from './related-searches'
 
 interface SearchResultsProps {
   query: string
@@ -13,6 +14,7 @@ interface SearchResultsProps {
   isLoading: boolean
   error: string | null
   method?: 'keyword' | 'semantic'
+  onRelatedSearchClick?: (query: string) => void
 }
 
 /**
@@ -25,6 +27,7 @@ export function SearchResults({
   isLoading,
   error,
   method,
+  onRelatedSearchClick,
 }: SearchResultsProps) {
   // Загрузка
   if (isLoading) {
@@ -122,6 +125,14 @@ export function SearchResults({
           </h3>
           {/* ProfileCard компоненты */}
         </div>
+      )}
+
+      {/* Похожие запросы */}
+      {query && services.length > 0 && onRelatedSearchClick && (
+        <RelatedSearches 
+          currentQuery={query} 
+          onSearchClick={onRelatedSearchClick}
+        />
       )}
     </div>
   )
