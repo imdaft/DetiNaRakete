@@ -4,9 +4,9 @@
   "private": true,
   "description": "🚀 Запускаем детей к их мечтам! Федеральная платформа детских праздников с AI",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 4000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 4000",
     "lint": "next lint"
   },
   "dependencies": {
