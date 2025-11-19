@@ -17,23 +17,22 @@ export default function QuickLoginPage() {
     setError('')
 
     try {
-      const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      )
+      const supabase = createClient()
 
+      console.log('[QuickLogin] Attempting login...')
       const { data, error: loginError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
+      console.log('[QuickLogin] Login result:', data?.user ? 'SUCCESS' : 'FAILED', loginError?.message || '')
 
       if (loginError) {
         setError(loginError.message)
         setStatus('Ошибка входа')
       } else {
-        setStatus('Успешно! Перенаправляю...')
+        setStatus('Успешно! Перенаправляю на создание профиля...')
         setTimeout(() => {
-          router.push('/')
+          router.push('/quick-profile')
           router.refresh()
         }, 1000)
       }
