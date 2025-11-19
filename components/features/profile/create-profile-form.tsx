@@ -106,6 +106,7 @@ export function CreateProfileForm() {
     const files = event.target.files
     if (!files || !user) return
 
+    console.log('[handlePhotoUpload] Starting upload, files:', files.length)
     setIsLoading(true)
     setError(null)
 
@@ -113,6 +114,8 @@ export function CreateProfileForm() {
       const uploadedUrls: string[] = []
 
       for (const file of Array.from(files)) {
+        console.log('[handlePhotoUpload] Processing file:', file.name, 'Size:', file.size, 'Type:', file.type)
+        
         // Проверка размера (10MB)
         if (file.size > 10 * 1024 * 1024) {
           throw new Error(`Файл ${file.name} слишком большой (максимум 10MB)`)
@@ -126,24 +129,40 @@ export function CreateProfileForm() {
         // Загружаем файл
         const fileExt = file.name.split('.').pop()
         const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
+        
+        console.log('[handlePhotoUpload] Uploading to:', fileName)
 
-        const { error: uploadError } = await supabase.storage
+        // Добавляем таймаут для загрузки
+        const uploadPromise = supabase.storage
           .from('portfolio')
           .upload(fileName, file, {
             cacheControl: '3600',
             upsert: false,
           })
 
-        if (uploadError) throw uploadError
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Таймаут загрузки (30 сек)')), 30000)
+        )
+
+        const { error: uploadError } = await Promise.race([uploadPromise, timeoutPromise]) as any
+
+        if (uploadError) {
+          console.error('[handlePhotoUpload] Upload error:', uploadError)
+          throw uploadError
+        }
+
+        console.log('[handlePhotoUpload] Upload success, getting public URL...')
 
         // Получаем публичный URL
         const { data: publicUrlData } = supabase.storage
           .from('portfolio')
           .getPublicUrl(fileName)
 
+        console.log('[handlePhotoUpload] Public URL:', publicUrlData.publicUrl)
         uploadedUrls.push(publicUrlData.publicUrl)
       }
 
+      console.log('[handlePhotoUpload] All uploads complete:', uploadedUrls)
       setUploadedPhotos([...uploadedPhotos, ...uploadedUrls])
       
       // Если это первое фото, делаем его обложкой
