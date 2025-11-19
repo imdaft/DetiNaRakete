@@ -23,7 +23,7 @@ export function useUser() {
       console.error('[useUser] TIMEOUT: Принудительно завершаем загрузку')
       setLoading(false)
       setInitialized(true)
-    }, 5000) // 5 секунд максимум
+    }, 15000) // 15 секунд максимум
 
     // Получаем текущего пользователя при монтировании
     const initializeAuth = async () => {
@@ -31,9 +31,11 @@ export function useUser() {
         console.log('[useUser] 1. Starting auth initialization...')
         setLoading(true)
         
+        console.log('[useUser] 1.5. Calling supabase.auth.getUser()...')
         const {
           data: { user: authUser },
         } = await supabase.auth.getUser()
+        console.log('[useUser] 1.6. getUser() completed!')
 
         console.log('[useUser] 2. Auth user:', authUser ? `ID: ${authUser.id}, Email: ${authUser.email}` : 'NULL')
 
