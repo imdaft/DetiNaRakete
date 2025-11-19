@@ -18,6 +18,13 @@ export function useUser() {
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
 
+    // Таймаут на случай если что-то зависнет
+    const loadingTimeout = setTimeout(() => {
+      console.error('[useUser] TIMEOUT: Принудительно завершаем загрузку')
+      setLoading(false)
+      setInitialized(true)
+    }, 5000) // 5 секунд максимум
+
     // Получаем текущего пользователя при монтировании
     const initializeAuth = async () => {
       try {
@@ -74,6 +81,7 @@ export function useUser() {
         reset()
       } finally {
         console.log('[useUser] 7. Initialization complete, setting loading=false')
+        clearTimeout(loadingTimeout) // Отменяем таймаут если всё прошло успешно
         setLoading(false)
         setInitialized(true)
       }
@@ -111,6 +119,7 @@ export function useUser() {
 
     // Отписываемся при размонтировании
     return () => {
+      clearTimeout(loadingTimeout)
       subscription.unsubscribe()
     }
   }, [isInitialized, setUser, setProfile, setLoading, setInitialized, reset])
