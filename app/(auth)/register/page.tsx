@@ -40,10 +40,7 @@ export default function RegisterPage() {
   const [isSuccess, setIsSuccess] = useState(false)
 
   // Создаём клиент Supabase
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabase = createClient()
 
   // Инициализация формы
   const form = useForm<RegisterInput>({
