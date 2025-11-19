@@ -143,9 +143,25 @@ export const serviceSchema = z.object({
 export type ServiceInput = z.infer<typeof serviceSchema>
 
 /**
- * Схема для обновления услуги (все поля опциональны кроме валидации связей)
+ * Схема для обновления услуги (все поля опциональны)
  */
-export const serviceUpdateSchema = serviceSchema.partial()
+export const serviceUpdateSchema = z.object({
+  title: z.string().min(5).max(200).optional(),
+  description: z.string().min(20).max(3000).optional(),
+  category_id: z.string().uuid().optional().nullable(),
+  price: z.number().min(0).optional().nullable(),
+  price_from: z.number().min(0).optional().nullable(),
+  price_to: z.number().min(0).optional().nullable(),
+  currency: z.string().optional(),
+  duration_minutes: z.number().int().min(15).max(1440).optional().nullable(),
+  age_from: z.number().int().min(0).max(18).optional().nullable(),
+  age_to: z.number().int().min(0).max(18).optional().nullable(),
+  capacity_min: z.number().int().min(1).optional().nullable(),
+  capacity_max: z.number().int().min(1).optional().nullable(),
+  tags: z.array(z.string()).max(10).optional(),
+  active: z.boolean().optional(),
+  featured: z.boolean().optional(),
+})
 
 export type ServiceUpdateInput = z.infer<typeof serviceUpdateSchema>
 

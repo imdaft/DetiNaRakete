@@ -93,7 +93,26 @@ export type ProfileInput = z.infer<typeof profileSchema>
 /**
  * Схема для обновления профиля (все поля опциональны)
  */
-export const profileUpdateSchema = profileSchema.partial()
+export const profileUpdateSchema = z.object({
+  display_name: z.string().min(2).max(100).optional(),
+  slug: z.string().min(2).max(50).regex(/^[a-z0-9-]+$/).optional(),
+  bio: z.string().max(500).optional(),
+  description: z.string().min(50).max(5000).optional(),
+  city: z.string().min(1).optional(),
+  address: z.string().max(200).optional(),
+  tags: z.array(z.string()).min(1).max(10).optional(),
+  price_range: z.enum(['$', '$$', '$$$']).optional(),
+  email: z.string().email().optional(),
+  phone: z.string().optional(),
+  website: z.string().url().optional().or(z.literal('')),
+  social_links: z.object({
+    vk: z.string().url().optional().or(z.literal('')),
+    instagram: z.string().url().optional().or(z.literal('')),
+    telegram: z.string().optional().or(z.literal('')),
+    youtube: z.string().url().optional().or(z.literal('')),
+  }).optional(),
+  portfolio_url: z.string().url().optional().or(z.literal('')),
+})
 
 export type ProfileUpdateInput = z.infer<typeof profileUpdateSchema>
 
