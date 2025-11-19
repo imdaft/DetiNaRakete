@@ -1,9 +1,10 @@
 'use client'
 
-import { Search as SearchIcon } from 'lucide-react'
+import { Search as SearchIcon, Sparkles, Hash } from 'lucide-react'
 import { ServiceCard } from '@/components/features/service/service-card'
 import { ServiceCardSkeleton } from '@/components/shared/skeletons'
 import { EmptyState } from '@/components/shared/empty-state'
+import { Badge } from '@/components/ui/badge'
 
 interface SearchResultsProps {
   query: string
@@ -11,6 +12,7 @@ interface SearchResultsProps {
   profiles: any[]
   isLoading: boolean
   error: string | null
+  method?: 'keyword' | 'semantic'
 }
 
 /**
@@ -22,6 +24,7 @@ export function SearchResults({
   profiles,
   isLoading,
   error,
+  method,
 }: SearchResultsProps) {
   // Загрузка
   if (isLoading) {
@@ -71,10 +74,27 @@ export function SearchResults({
       {/* Заголовок */}
       {query && (
         <div>
-          <h2 className="text-2xl font-bold">
-            Результаты поиска: "{query}"
-          </h2>
-          <p className="text-muted-foreground mt-1">
+          <div className="flex items-center gap-3 mb-2">
+            <h2 className="text-2xl font-bold">
+              Результаты поиска: "{query}"
+            </h2>
+            {method && (
+              <Badge variant={method === 'semantic' ? 'default' : 'secondary'}>
+                {method === 'semantic' ? (
+                  <>
+                    <Sparkles className="mr-1 h-3 w-3" />
+                    AI поиск
+                  </>
+                ) : (
+                  <>
+                    <Hash className="mr-1 h-3 w-3" />
+                    Текстовый поиск
+                  </>
+                )}
+              </Badge>
+            )}
+          </div>
+          <p className="text-muted-foreground">
             Найдено: {totalResults} {totalResults === 1 ? 'результат' : 'результатов'}
           </p>
         </div>

@@ -45,6 +45,7 @@ function SearchContent() {
               profiles={results.profiles}
               isLoading={results.isLoading}
               error={results.error}
+              method={results.method}
             />
           </main>
         </div>
