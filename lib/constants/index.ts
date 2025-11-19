@@ -9,7 +9,7 @@ export const ROUTES = {
   
   // Авторизация
   LOGIN: '/login',
-  SIGNUP: '/signup',
+  SIGNUP: '/register',
   
   // Dashboard
   DASHBOARD: '/dashboard',

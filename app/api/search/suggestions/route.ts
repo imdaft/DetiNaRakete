@@ -90,9 +90,7 @@ export async function POST(request: Request) {
     ]
     
     return NextResponse.json({
-      suggestions: fallbackSuggestions.filter(s => 
-        s.toLowerCase().includes(request.body?.query?.toLowerCase() || '')
-      ),
+      suggestions: fallbackSuggestions,
     })
   }
 }
