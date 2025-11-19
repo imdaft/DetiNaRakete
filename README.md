@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DetiNaRakete - MVP Development
 
-## Getting Started
+**🚀 Запускаем детей к их мечтам!**
 
-First, run the development server:
+## 🚀 Быстрый старт
+
+### 1. Установка зависимостей
+
+```bash
+npm install --legacy-peer-deps
+```
+
+### 2. Настройка переменных окружения
+
+Создайте `.env.local`:
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://ваш-проект.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+
+# Gemini AI
+GEMINI_API_KEY=AIzaSy...
+
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_APP_NAME=DetiNaRakete
+```
+
+### 3. Запуск
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📚 Документация
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Полная спека:** `../PROJECT_SPECS.md`
+- **Быстрый старт:** `../QUICKSTART.md`
+- **TODO лист:** `../TODO.md`
+- **Tech Stack:** `../TECH_STACK.md`
 
-## Learn More
+## 🛠️ Команды
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev          # Разработка (Turbopack)
+npm run build        # Сборка production
+npm start            # Запуск production
+npm run lint         # Линтинг
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✅ Статус
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [x] Next.js 15 + TypeScript + Tailwind
+- [x] Supabase клиенты (client, server)
+- [x] Gemini AI интеграция
+- [x] Базовая структура проекта
+- [ ] База данных (миграции)
+- [ ] Auth flow
+- [ ] UI компоненты
 
-## Deploy on Vercel
+## 📦 Основные технологии
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Next.js** 15.0.3
+- **React** 19.0.0-rc
+- **TypeScript** 5.6
+- **Tailwind CSS** 3.4
+- **Supabase** (PostgreSQL + pgvector)
+- **Gemini 2.0 Flash** (AI)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Следующие шаги
+
+1. Создать проект в Supabase
+2. Получить Gemini API ключ
+3. Настроить `.env.local`
+4. Создать схему БД
+5. Начать разработку по `../TODO.md`
+
+---
+
+**Версия:** 0.1.0  
+**Дата:** 18.11.2025
