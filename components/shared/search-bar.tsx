@@ -41,10 +41,20 @@ export function SearchBar({
   // Загрузка популярных запросов при монтировании
   useEffect(() => {
     if (showSuggestions) {
-      fetch('/api/search/suggestions')
-        .then(res => res.json())
-        .then(data => setTrendingSearches(data.trending || []))
-        .catch(err => console.error('Failed to load trending searches:', err))
+      // Временно отключено - API требует исправления
+      // fetch('/api/search/suggestions')
+      //   .then(res => res.json())
+      //   .then(data => setTrendingSearches(data.trending || []))
+      //   .catch(err => console.error('Failed to load trending searches:', err))
+      
+      // Используем статичные trending searches
+      setTrendingSearches([
+        'аниматор на день рождения',
+        'химическое шоу',
+        'организация детского праздника',
+        'квест для детей',
+        'детская фотосессия',
+      ])
     }
   }, [showSuggestions])
 
