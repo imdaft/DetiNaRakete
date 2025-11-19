@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@/lib/supabase/client'
 import { useUser } from '@/lib/hooks/useUser'
 
 export default function QuickProfilePage() {
@@ -37,10 +37,7 @@ export default function QuickProfilePage() {
     setError('')
 
     try {
-      const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      )
+      const supabase = createClient()
 
       // Получаем текущего пользователя напрямую
       console.log('[handleCreate] Fetching current user...')

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@/lib/supabase/client'
 import { useAuthStore } from '@/lib/store/auth'
 import type { User as AppUser } from '@/types'
 
@@ -13,10 +13,7 @@ export function useUser() {
   const { user, profile, isLoading, isInitialized, setUser, setProfile, setLoading, setInitialized, reset } = useAuthStore()
 
   useEffect(() => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    const supabase = createClient()
 
     // Таймаут на случай если что-то зависнет
     const loadingTimeout = setTimeout(() => {

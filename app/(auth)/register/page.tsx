@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@/lib/supabase/client'
 import { Rocket, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react'
 
 import { registerSchema, type RegisterInput } from '@/lib/validations/auth'
